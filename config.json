@@ -1,0 +1,35 @@
+{
+    "sentinel": {
+        "workspaceId": "YOUR_WORKSPACE_ID",
+        "primaryKey": "YOUR_PRIMARY_KEY",
+        "logAnalyticsEndpoint": "https://{workspaceId}.ods.opinsights.azure.com",
+        "apiVersion": "2016-04-01"
+    },
+    "wazuh": {
+        "managerHost": "localhost",
+        "managerPort": 1514,
+        "authenticationPort": 1515,
+        "apiPort": 55000
+    },
+    "elasticsearch": {
+        "host": "localhost",
+        "port": 9200,
+        "protocol": "https",
+        "username": "elastic",
+        "password": "CHANGE_ME"
+    },
+    "kibana": {
+        "host": "localhost",
+        "port": 5601,
+        "protocol": "https"
+    },
+    "shuffle": {
+        "apiEndpoint": "http://localhost:3001",
+        "apiKey": "YOUR_SHUFFLE_API_KEY"
+    },
+    "logstash": {
+        "host": "localhost",
+        "port": 5044,
+        "pipeline": "wazuh-to-sentinel"
+    }
+}

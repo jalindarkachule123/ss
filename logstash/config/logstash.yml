@@ -1,0 +1,16 @@
+http.host: "0.0.0.0"
+http.port: 9600
+
+path.data: /var/lib/logstash
+path.logs: /var/log/logstash
+
+pipeline.ordered: auto
+pipeline.workers: 2
+
+xpack.monitoring.enabled: true
+xpack.monitoring.elasticsearch.hosts: ["http://localhost:9200"]
+
+# Configure multiple pipelines
+path.config: /etc/logstash/conf.d
+config.reload.automatic: true
+config.reload.interval: 3s

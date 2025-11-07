@@ -1,0 +1,26 @@
+name: Sentinel Post-Processing
+description: Processes alerts from Wazuh and enriches them with XAI analysis before sending to Sentinel
+triggers:
+  - name: wazuh_alert
+    description: Triggered when a new Wazuh alert is received
+    type: webhook
+    conditions:
+      - field: alert_level
+        operator: greater_than
+        value: 7
+
+actions:
+  - name: xai_analysis
+    type: python
+    script: xai/xai_agent.py
+    input:
+      alert_data: "{{trigger.alert}}"
+
+  - name: send_to_sentinel
+    type: http
+    url: "{{config.sentinel.logAnalyticsEndpoint}}"
+    method: POST
+    headers:
+      x-ms-date: "{{now()}}"
+      Authorization: "{{sentinel_auth_header}}"
+    body: "{{merge(trigger.alert, steps.xai_analysis.output)}}"

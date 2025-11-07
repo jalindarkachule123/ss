@@ -1,0 +1,28 @@
+name: XAI Analysis
+description: Analyzes security alerts using explainable AI techniques
+triggers:
+  - name: analysis_request
+    description: Triggered when XAI analysis is requested
+    type: function
+    conditions: []
+
+actions:
+  - name: load_model
+    type: python
+    script: xai/xai_agent.py
+    function: load_model
+
+  - name: analyze_alert
+    type: python
+    script: xai/xai_agent.py
+    function: analyze_alert
+    input:
+      alert_data: "{{trigger.alert_data}}"
+      model: "{{steps.load_model.output}}"
+
+  - name: generate_explanation
+    type: python
+    script: xai/xai_agent.py
+    function: generate_explanation
+    input:
+      analysis: "{{steps.analyze_alert.output}}"
